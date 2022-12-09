@@ -1,0 +1,14 @@
+.container {
+  display: flex;
+  justify-content: center;
+  .auth-wrap {
+    margin: 40px 0;
+    width: 600px;
+    max-width: 100%;
+  }
+  .button-wrap{
+   display: flex;
+   justify-content: center;
+   margin-top: 20px;
+  }
+}
