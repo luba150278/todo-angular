@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { map } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { TodoService } from 'src/services/todo.service';
 import instance from 'src/shared/request';
 
 type Item = {
@@ -22,29 +23,19 @@ export class TodoComponent {
   httpOptions = instance();
   items: Item[] = [];
   error = '';
-  constructor(private http: HttpClient) {}
+  constructor(private service: TodoService) {}
   ngOnInit() {
     this.getItems();
   }
-  getItems(): void {
-    //console.log('sdasdad');
-    const url = `${environment.apiUrl}/router?action=getItems`;
-    this.http
-      .post<ItemsResponseInterface>(
-        url,
-        {
-          activeID: localStorage.getItem('activeID'),
-        },
-        this.httpOptions
-      )
-      .pipe(map((data) => data))
-      .subscribe({
-        next: (data) => {
-          this.items = data.items;
-        },
-        error: (e) => {
-          this.error = `Server error: ${e.message}`;
-        },
-      });
+  async getItems(): Promise<void> {
+
+    const data = await this.service.getItems();
+    if (data.items) {
+      this.items = data.items
+      return;
+    }
+
+    this.error="Помилка сервера"
+
   }
 }
