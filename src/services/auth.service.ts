@@ -2,16 +2,16 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { lastValueFrom, map, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { LoginResInterface } from 'src/interfaces/auth.interface';
+import {
+  LoginResInterface,
+  RegResponseInterface,
+} from 'src/interfaces/auth.interface';
 import instance from 'src/shared/request';
-interface XXX {
-  activeID: string;
-  error?: string;
-}
+
 @Injectable({
   providedIn: 'root',
 })
-export class LoginService {
+export class AuthService {
   httpOptions = instance();
   activeID = '';
   error = '';
@@ -30,7 +30,21 @@ export class LoginService {
       localStorage.setItem('activeID', data.activeID);
     }
     return data;
-
   }
 
+  async reg(login: string, pass: string): Promise<RegResponseInterface> {
+    const url = `${environment.apiUrl}/router?action=register`;
+    const source$ = this.http.post<RegResponseInterface>(
+      url,
+      { login, pass },
+      this.httpOptions
+    );
+    const data = await lastValueFrom(source$);
+
+    if (data.ok && !data.alreadyExist) {
+      await this.login(login, pass);
+    }
+
+    return data;
+  }
 }

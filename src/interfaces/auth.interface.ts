@@ -4,3 +4,7 @@ export interface LoginResInterface {
   ok: boolean;
   error?: string;
 }
+export interface RegResponseInterface {
+  ok: boolean;
+  alreadyExist: true;
+}
