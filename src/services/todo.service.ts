@@ -13,15 +13,19 @@ export class TodoService {
   constructor(private http: HttpClient) {}
 
   async getItems(): Promise<ItemsResponseInterface> {
-    const url = `${environment.apiUrl}/router?action=getItems1`;
-    const source$ = this.http.post<ItemsResponseInterface>(
-      url,
-      {
-        activeID: localStorage.getItem('activeID'),
-      },
-      this.httpOptions
-    );
+    try {
+      const url = `${environment.apiUrl}/router?action=getItems1`;
+      const source$ = this.http.post<ItemsResponseInterface>(
+        url,
+        {
+          activeID: localStorage.getItem('activeID'),
+        },
+        this.httpOptions
+      );
 
-    return await lastValueFrom(source$);
+      return await lastValueFrom(source$);
+    } catch (e) {
+      return { items: [], error: 'Bad' };
+    }
   }
 }

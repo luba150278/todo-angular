@@ -1,7 +1,4 @@
-import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { map } from 'rxjs';
-import { environment } from 'src/environments/environment';
 import { TodoService } from 'src/services/todo.service';
 import instance from 'src/shared/request';
 
@@ -28,14 +25,13 @@ export class TodoComponent {
     this.getItems();
   }
   async getItems(): Promise<void> {
-
     const data = await this.service.getItems();
-    if (data.items) {
-      this.items = data.items
+    console.log(data);
+    if (data.items && !data.error) {
+      this.items = data.items;
       return;
     }
 
-    this.error="Помилка сервера"
-
+    this.error = data.error || 'Помилка сервера';
   }
 }

@@ -5,4 +5,5 @@ export type Item = {
 };
 export type ItemsResponseInterface = {
   items: Item[];
+  error?: string;
 };
