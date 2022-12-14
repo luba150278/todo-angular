@@ -46,8 +46,8 @@ export class LoginComponent {
     // }
     //console.log(data)
     if (data.ok) {
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('activeID', data.activeID);
+      // localStorage.setItem('token', data.token);
+      // localStorage.setItem('activeID', data.activeID);
       this.activeID = data.activeID;
     }
 

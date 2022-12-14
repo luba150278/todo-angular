@@ -19,50 +19,18 @@ export class LoginService {
 
   async login(login: string, pass: string): Promise<LoginResInterface> {
     const url = `${environment.apiUrl}/router?action=login`;
-    // this.http
-    //   .post<LoginResInterface>(url, { login, pass }, this.httpOptions)
-    //   .pipe(map((data) => data))
-    //   .subscribe({
-    //     next: (data) => {
-    //       if (data.token !== '' && data.activeID !== '') {
-    //         //this.activeID = data.activeID;
-    //         localStorage.setItem('token', data.token);
-    //         localStorage.setItem('activeID', data.activeID);
-    //         console.log('naid' + data.activeID);
-    //         this.setActiveID(data.activeID);
-    //         //this.activeID = data.activeID;
-    //         return;
-    //       }
-    //       this.error = 'Такий користувач не зареэстрований';
-    //     },
-    //     error: (e) => {
-    //       this.error = `Server error + ${e.message}`;
-    //     },
-    //   });
-
-    // const t = await this.http
-    //   .post<LoginResInterface>(url, { login, pass }, this.httpOptions)
-    //   .toPromise();
-    // console.log(t);
-
     const source$ = this.http.post<LoginResInterface>(
       url,
       { login, pass },
       this.httpOptions
     );
     const data = await lastValueFrom(source$);
+    if (data.ok) {
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('activeID', data.activeID);
+    }
     return data;
-    //console.log(`The final number is ${JSON.stringify(finalNumber)}`);
+
   }
 
-  setActiveID(data: string): void {
-    this.activeID = data;
-  }
-  getActiveID() {
-    return this.activeID;
-  }
-
-  getError() {
-    return this.error;
-  }
 }

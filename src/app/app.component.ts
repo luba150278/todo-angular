@@ -16,21 +16,21 @@ export class AppComponent {
   isLogout: boolean = false;
   //@Output() logoutF = new EventEmitter<boolean>();
   isAuth = !!localStorage.getItem('token');
-  @ViewChild(AuthComponent)
-  viewChild!: AuthComponent;
+  // @ViewChild(AuthComponent)
+  // viewChild!: AuthComponent;
   ngOnInit() {
     //console.log('init');
   }
 
   ngAfterContentChecked() {
     //console.log(this.isLogout);
-    if (this.viewChild) {
-      if (localStorage.getItem('activeID')) {
-        this.isAuth = true;
-        this.isLogout = false;
-        return;
-      }
+    // if (this.viewChild) {
+    if (localStorage.getItem('activeID')) {
+      this.isAuth = true;
+      this.isLogout = false;
+      return;
     }
+    // }
 
     if (this.isLogout) {
       this.isAuth = false;
