@@ -27,7 +27,7 @@ export class TodoComponent {
     this.getItems();
   }
   getItems(): void {
-    console.log('sdasdad');
+    //console.log('sdasdad');
     const url = `${environment.apiUrl}/router?action=getItems`;
     this.http
       .post<ItemsResponseInterface>(

@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { AuthComponent } from './components/auth/auth.component';
 
 @Component({
@@ -13,14 +19,16 @@ export class AppComponent {
   @ViewChild(AuthComponent)
   viewChild!: AuthComponent;
   ngOnInit() {
-    console.log('init');
+    //console.log('init');
   }
 
   ngAfterContentChecked() {
-    console.log(this.isLogout);
+    //console.log(this.isLogout);
     if (this.viewChild) {
       if (localStorage.getItem('activeID')) {
         this.isAuth = true;
+        this.isLogout = false;
+        return;
       }
     }
 
