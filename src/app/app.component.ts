@@ -13,25 +13,15 @@ import { AuthComponent } from './components/auth/auth.component';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
+  //15.12.2022 трохи переробила код - оптимізувала перевірку авторизації, убрала viewChild
   isLogout: boolean = false;
-  //@Output() logoutF = new EventEmitter<boolean>();
   isAuth = !!localStorage.getItem('token');
-  // @ViewChild(AuthComponent)
-  // viewChild!: AuthComponent;
-  ngOnInit() {
-    // console.log('init');
-  }
-
   ngAfterContentChecked() {
-    // console.log(this.isLogout);
-    // if (this.viewChild) {
     if (localStorage.getItem('activeID')) {
       this.isAuth = true;
       this.isLogout = false;
       return;
     }
-    // }
-
     if (this.isLogout) {
       this.isAuth = false;
     }
