@@ -13,16 +13,16 @@ export class AppComponent {
   @ViewChild(AuthComponent)
   viewChild!: AuthComponent;
   ngOnInit() {
-    console.log('init');
+    // console.log('init');
   }
 
   ngAfterContentChecked() {
-    console.log(this.isLogout);
-    if (this.viewChild) {
+    // console.log(this.isLogout);
+    // if (this.viewChild) {
       if (localStorage.getItem('activeID')) {
         this.isAuth = true;
       }
-    }
+    // }
 
     if (this.isLogout) {
       this.isAuth = false;
