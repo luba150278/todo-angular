@@ -1,10 +1,24 @@
 <section>
   <div class="container">
     <div *ngIf="error != ''">{{ error }}</div>
+    <p *ngIf="items.length === 0">Ще не має данних</p>
+    <div class="newTask">
+      <mat-form-field class="example-full-width">
+        <input
+          matInput
+          type="text"
+          [(ngModel)]="newTask"
+          placeholder="Введіть дані"
+        />
+      </mat-form-field>
+      <button mat-raised-button (click)="addFunc()">Додати задачу</button>
+    </div>
     <div *ngIf="items.length != 0">
-      <div *ngFor="let item of items">
-        <mat-checkbox [checked]="item.checked"></mat-checkbox>
-        {{ item.text }}
+      <div *ngFor="let item of items" class="item">
+        <mat-checkbox [checked]="item.checked" (change)="changeFunc(item.id, item.checked)"></mat-checkbox>
+        <p>{{ item.text }}</p>
+        <button mat-raised-button (click)="deleteFunc(item.id)">Видалити задачу</button>
+   
       </div>
     </div>
   </div>
