@@ -1,8 +1,27 @@
-.newTask{
-    
+.newTask {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  margin-top: 20px;
 }
-.item{
-    display: flex;
-    flex-direction: row;
-    gap:40px;
+.checked {
+  text-decoration: line-through;
+}
+.items {
+  display: grid;
+  gap: 20px;
+  .item {
+    display: grid;
+    grid-template-columns: 20px 1fr 2fr;
+    gap: 40px;
+    align-items: center;
+    .buttons {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+    .item-text {
+      cursor: pointer;
+    }
+  }
 }

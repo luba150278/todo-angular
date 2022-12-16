@@ -15,7 +15,9 @@ export class HeaderComponent {
   @Output() checkLogoutChange = new EventEmitter<boolean>();
   httpOptions = instance();
   error = '';
-  constructor(private service: AuthService) {}
+
+  constructor(private service: AuthService) { }
+
   async logoutFunc(): Promise<void> {
     const data = await this.service.logout();
     if (data.ok) {

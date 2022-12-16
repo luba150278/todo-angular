@@ -11,14 +11,61 @@
           placeholder="Введіть дані"
         />
       </mat-form-field>
-      <button mat-raised-button (click)="addFunc()">Додати задачу</button>
+      <button mat-raised-button (click)="addFunc()" color="accent">
+        Додати задачу
+      </button>
     </div>
-    <div *ngIf="items.length != 0">
-      <div *ngFor="let item of items" class="item">
-        <mat-checkbox [checked]="item.checked" (change)="changeFunc(item.id, item.checked)"></mat-checkbox>
-        <p>{{ item.text }}</p>
-        <button mat-raised-button (click)="deleteFunc(item.id)">Видалити задачу</button>
-   
+    <div *ngIf="items.length != 0" class="items" cdkDropList (cdkDropListDropped)="drop($event)">
+      <div *ngFor="let item of items" class="item" cdkDrag>
+        <mat-checkbox
+          [checked]="item.checked"
+          (change)="changeFunc(item.id, item.checked)"
+        ></mat-checkbox>
+        <div>
+          <p
+            *ngIf="item.id !== editItemId"
+            class="item-text"
+            [class.checked]="item.checked"
+            (editItemId)="(editItemId)"
+            (click)="chahgeFieldFunc(item.id)"
+          >
+            {{ item.text }}
+          </p>
+
+          <mat-form-field appearance="fill" *ngIf="item.id === editItemId">
+            <input
+              (editItemId)="(editItemId)"
+              value="{{ item.text }}"
+              matInput
+              type="text"
+              (change)="changeVal($event)"
+              (keyup)="onKey($event, item.checked)"
+            />
+          </mat-form-field>
+        </div>
+        <div class="buttons">
+          <button
+            (click)="chahgeFieldFunc(item.id)"
+            mat-stroked-button
+            color="warn"
+          >
+            Редагувати
+          </button>
+          <button
+            (click)="saveFunc(item.checked)"
+            mat-stroked-button
+            color="primary"
+          >
+            Зберігти
+          </button>
+          <button
+            (click)="deleteFunc(item.id)"
+            mat-stroked-button
+            color="accent"
+          >
+            Видалити задачу
+          </button>
+        </div>
       </div>
     </div>
   </div>
