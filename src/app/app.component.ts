@@ -16,6 +16,15 @@ import { AuthComponent } from './components/auth/auth.component';
 export class AppComponent {
   isLogout: boolean = false;
   isAuth = !!localStorage.getItem('token');
+  theme = 'Темна';
+  ngOnInit() {
+    if (!localStorage.getItem('theme')) {
+      this.theme = 'Темна';
+      localStorage.setItem('theme', 'Темна');
+    } else {
+      this.theme = localStorage.getItem('theme') || 'Темна';
+    }
+  }
   ngAfterContentChecked() {
     if (localStorage.getItem('activeID')) {
       this.isAuth = true;

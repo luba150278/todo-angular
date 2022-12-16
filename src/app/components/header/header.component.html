@@ -1,9 +1,15 @@
-<header>
+<header [attr.theme]="theme">
   <div class="container">
-
     <p>header works!</p>
-    <p *ngIf="error !==''">{{error}}</p>
-    <button mat-raised-button color="primary" (click)="logoutFunc()">
+    <p *ngIf="error !== ''">{{ error }}</p>
+    <mat-slide-toggle (change)="changeTheme()">{{ theme }}</mat-slide-toggle>
+    <button
+      *ngIf="!checkLogout"
+      [checkLogout]="checkLogout"
+      mat-raised-button
+      color="primary"
+      (click)="logoutFunc()"
+    >
       Вийти
     </button>
   </div>

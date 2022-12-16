@@ -11,15 +11,73 @@
           placeholder="Введіть дані"
         />
       </mat-form-field>
-      <button mat-raised-button (click)="addFunc()">Додати задачу</button>
+      <button mat-raised-button color="accent" (click)="addFunc()">
+        Додати задачу
+      </button>
     </div>
-    <div *ngIf="items.length != 0">
-      <div *ngFor="let item of items" class="item">
-        <mat-checkbox [checked]="item.checked" (change)="changeFunc(item.id, item.checked)"></mat-checkbox>
-        <p>{{ item.text }}</p>
-        <button mat-raised-button (click)="deleteFunc(item.id)">Видалити задачу</button>
-   
+    <div
+      *ngIf="items.length != 0"
+      cdkDropList
+      (cdkDropListDropped)="drop($event)"
+      class="items"
+    >
+      <div
+        *ngFor="
+          let item of items.slice(
+            pageSize * pageIndex,
+            (pageIndex + 1) * pageSize
+          )
+        "
+        class="item"
+        cdkDrag
+      >
+        <mat-checkbox
+          [checked]="item.checked"
+          (change)="changeFunc(item.id, item.checked)"
+        ></mat-checkbox>
+
+        <div>
+          <p *ngIf="editId !== item.id" [class.checked]="item.checked">
+            {{ item.text }}
+          </p>
+
+          <mat-form-field class="example-full-width" *ngIf="editId === item.id">
+            <input
+              matInput
+              type="text"
+              (editTask)="(editTask)"
+              value="{{ item.text }}"
+              (change)="changeHandler($event)"
+              (keyup)="keyHandler($event, item.checked)"
+            />
+          </mat-form-field>
+        </div>
+        <div class="buttons">
+          <button mat-raised-button color="warn" (click)="deleteFunc(item.id)">
+            Видалити задачу
+          </button>
+          <button mat-raised-button color="primary" (click)="editFunc(item.id)">
+            Редагувати
+          </button>
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="saveFunc(item.checked)"
+          >
+            Зберігти
+          </button>
+        </div>
       </div>
     </div>
+
+    <mat-paginator
+      *ngIf="items.length > 5"
+      (page)="handlePageEvent($event)"
+      [length]="items.length"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="[5, 10, 25, 100]"
+      aria-label="Select page"
+    >
+    </mat-paginator>
   </div>
 </section>

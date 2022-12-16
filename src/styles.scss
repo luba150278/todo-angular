@@ -52,3 +52,7 @@ header, footer{
   display: flex;
   align-items: center;
 }
+header[theme="Темна"], footer[theme="Темна"]{
+  background-color: black;
+  color: rgb(205, 247, 233);
+}
