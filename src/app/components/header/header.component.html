@@ -5,7 +5,6 @@
     <mat-slide-toggle (change)="changeTheme()">{{ theme }}</mat-slide-toggle>
     <button
       *ngIf="!checkLogout"
-      [checkLogout]="checkLogout"
       mat-raised-button
       color="primary"
       (click)="logoutFunc()"
