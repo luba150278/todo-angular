@@ -1,9 +1,10 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { map } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 import { AuthService } from 'src/services/auth.service';
-import instance from 'src/shared/request';
 
 @Component({
   selector: 'app-header',
@@ -11,42 +12,38 @@ import instance from 'src/shared/request';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
-  @Input() checkLogout = false;
+  @Input() checkLogout = localStorage.getItem('token') ? false : true;
   @Output() checkLogoutChange = new EventEmitter<boolean>();
   @Output() themeChange = new EventEmitter<string>();
-  httpOptions = instance();
-  error = '';
   @Input() theme = localStorage.getItem('theme') || 'Темна';
+  error = '';
+  @Input() isAuth = false;
+
   constructor(private service: AuthService) {}
   ngOnInit() {
-    console.log(localStorage.getItem('token'));
-    if (localStorage.getItem('token')) {
-      this.checkLogout = false;
-    } else {
-      this.checkLogout = true;
-    }
+    this.checkLogout = localStorage.getItem('token') ? false : true;
   }
+
   async logoutFunc(): Promise<void> {
     const data = await this.service.logout();
     if (data.ok) {
       this.checkLogout = true;
       this.checkLogoutChange.emit(this.checkLogout);
-      localStorage.removeItem("token");
-      localStorage.removeItem("activeID");
+      localStorage.removeItem('token');
+      localStorage.removeItem('activeID');
       return;
     }
     this.error = data.error || 'Помилка невідома';
   }
 
-  changeTheme():void {
+  changeTheme(): void {
     if (this.theme === 'Темна') {
-      this.theme = 'Світла'
+      this.theme = 'Світла';
     } else {
-      this.theme = 'Темна'
+      this.theme = 'Темна';
     }
 
-    localStorage.setItem('theme', this.theme)
+    localStorage.setItem('theme', this.theme);
     this.themeChange.emit(this.theme);
-
   }
 }

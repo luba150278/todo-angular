@@ -1,19 +1,9 @@
-
 import { Component } from '@angular/core';
-import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 import { TodoService } from 'src/services/todo.service';
-import instance from 'src/shared/request';
 import { PageEvent } from '@angular/material/paginator';
-
-type Item = {
-  text: string;
-  id: string;
-  checked: boolean;
-};
-type ItemsResponseInterface = {
-  items: Item[];
-};
+import { Item } from 'src/interfaces/todo.interface';
 
 @Component({
   selector: 'app-todo',
@@ -21,7 +11,6 @@ type ItemsResponseInterface = {
   styleUrls: ['./todo.component.scss'],
 })
 export class TodoComponent {
-  httpOptions = instance();
   items: Item[] = [];
   error = '';
   newTask = '';
@@ -29,8 +18,7 @@ export class TodoComponent {
   editTask = '';
   pageSize = 5;
   pageIndex = 0;
-  pageEvent: PageEvent = new PageEvent;
-
+  pageEvent: PageEvent = new PageEvent();
 
   constructor(private service: TodoService) {}
   ngOnInit() {
@@ -99,7 +87,7 @@ export class TodoComponent {
     this.editTask = (event.target as HTMLInputElement).value;
   }
 
-  async keyHandler(event: KeyboardEvent, checked: boolean): Promise<void>{
+  async keyHandler(event: KeyboardEvent, checked: boolean): Promise<void> {
     if (event.key === 'Enter') {
       await this.saveFunc(checked);
     }

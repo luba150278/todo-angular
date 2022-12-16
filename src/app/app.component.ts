@@ -28,6 +28,7 @@ export class AppComponent {
   ngAfterContentChecked() {
     if (localStorage.getItem('activeID')) {
       this.isAuth = true;
+      this.isLogout = false;
       return;
     }
 

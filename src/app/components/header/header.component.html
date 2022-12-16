@@ -2,14 +2,16 @@
   <div class="container">
     <p>header works!</p>
     <p *ngIf="error !== ''">{{ error }}</p>
-    <mat-slide-toggle (change)="changeTheme()">{{ theme }}</mat-slide-toggle>
-    <button
-      *ngIf="!checkLogout"
-      mat-raised-button
-      color="primary"
-      (click)="logoutFunc()"
-    >
-      Вийти
-    </button>
+    <div class="rightBlock">
+      <mat-slide-toggle (change)="changeTheme()">{{ theme }}</mat-slide-toggle>
+      <button
+        *ngIf="isAuth"
+        mat-raised-button
+        color="primary"
+        (click)="logoutFunc()"
+      >
+        Вийти
+      </button>
+    </div>
   </div>
 </header>

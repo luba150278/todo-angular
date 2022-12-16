@@ -1,21 +1,5 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, Input } from '@angular/core';
-import { map } from 'rxjs';
-import { environment } from 'src/environments/environment';
 import { AuthService } from 'src/services/auth.service';
-import instance from 'src/shared/request';
-
-interface RegResponseInterface {
-  ok: boolean;
-  alreadyExist: true;
-}
-
-interface LoginResInterface {
-  token: string;
-  activeID: string;
-  ok: boolean;
-  error?: string;
-}
 
 @Component({
   selector: 'app-reg',
@@ -23,7 +7,6 @@ interface LoginResInterface {
   styleUrls: ['./reg.component.scss'],
 })
 export class RegComponent {
-  httpOptions = instance();
   login: string = '';
   pass: string = '';
   error: string = '';
@@ -40,7 +23,6 @@ export class RegComponent {
       this.error = data.error;
       return;
     }
-    this.activeID=localStorage.getItem("activeID")|| "";
+    this.activeID = localStorage.getItem('activeID') || '';
   }
-  
 }

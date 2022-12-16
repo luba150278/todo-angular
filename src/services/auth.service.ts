@@ -56,7 +56,7 @@ export class AuthService {
         this.httpOptions
       );
       const res = await lastValueFrom(source$);
-      if (res.ok && !res.alreadyExist) {
+      if (res.ok && res.alreadyExist) {
         return { ...res, error: 'такий користувач вже існує' };
       }
       const loginData = await this.login(login, pass);
